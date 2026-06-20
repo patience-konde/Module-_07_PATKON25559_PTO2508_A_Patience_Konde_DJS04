@@ -1,0 +1,30 @@
+/* Container wrapper to keep label and dropdown aligned */
+.sortContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Space between the label and the select dropdown */
+}
+
+/* Styling for the text label */
+.sortLabel {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-color, #333); /* Fallback to dark grey if CSS variable is missing */
+}
+
+/* Styling for the interactive dropdown menu */
+.sortSelect {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+  color: #333;
+}
+
+/* Visual feedback when a user clicks or tabs onto the dropdown */
+.sortSelect:focus {
+  border-color: #007bff; /* Highlights border blue on focus */
+}
