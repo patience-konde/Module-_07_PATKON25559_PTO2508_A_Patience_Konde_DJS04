@@ -1,4 +1,5 @@
 import PodcastCard from "./PodcastCard";
+import styles from "./podcastGrid.module.css"
 
 /**
  * Display a grid layout of podcast preview cards.Each card includes
