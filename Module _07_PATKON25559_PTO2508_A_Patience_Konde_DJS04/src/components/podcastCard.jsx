@@ -1,4 +1,6 @@
 import {formatDate} from '../utils/formatDate';
+import styles from "podcast.module,css"
+
 
 /**
  * render a single podcast preview card with image, title, number of 
