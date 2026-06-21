@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { PodcastContext } from "../context/PodcastContext";
+import { podcastContext } from "../context/podcastContext";
 import  styles from "./GeneFilter.module.css"
 
 /**

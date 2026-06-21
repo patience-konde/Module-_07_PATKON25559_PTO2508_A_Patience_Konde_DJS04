@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { podcastProvider } from "./context/PodcastContext";
+import { podcastProvider } from "./context/podcastContext";
 import {fetchPodcasts} from "./api/fetchPodcasts";
 import { Genrres } from "./data";
 import Header from "./components/Header";

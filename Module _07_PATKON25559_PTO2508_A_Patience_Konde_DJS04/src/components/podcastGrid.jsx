@@ -1,4 +1,4 @@
-import PodcastCard from "./PodcastCard";
+import PodcastCard from "./podcastCard";
 import styles from "./podcastGrid.module.css"
 
 /**
