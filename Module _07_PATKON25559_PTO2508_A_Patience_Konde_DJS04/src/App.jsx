@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { podcastProvider } from "./context/podcastContext";
 import {fetchPodcasts} from "./api/fetchPodcasts";
 import { Genrres } from "./data";
+import podcastGrid from "./components/podcastGrid";
 import Header from "./components/Header";
 import SearchBar from "./components/SeachBar";
 import SortSelect from "./components/SortSelect";
