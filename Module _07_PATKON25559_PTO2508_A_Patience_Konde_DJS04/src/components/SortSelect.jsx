@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './SortSelect.module.css';
+import styles from './sortSelect.module.css';
 
 /**
  * SortSelect Component

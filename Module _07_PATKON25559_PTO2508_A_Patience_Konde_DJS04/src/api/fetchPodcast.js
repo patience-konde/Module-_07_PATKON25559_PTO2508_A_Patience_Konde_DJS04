@@ -10,7 +10,7 @@
  * @returns {Promise<void>} - A promise that resolves when the fetch operation is complete.
 
  **/
-export async function fetchPodcasts(setPodcasts, setError, setLoading) {
+export async function fetchPodcast(setPodcasts, setError, setLoading) {
     try {
         const res = await fetch('https://podcast-api.netlify.app/');
         if (!res.ok) {

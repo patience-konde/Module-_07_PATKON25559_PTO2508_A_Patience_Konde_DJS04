@@ -1,69 +1,87 @@
-import { useEffect, useState } from "react";
-import { podcastProvider } from "./context/podcastContext";
-import {fetchPodcasts} from "./api/fetchPodcasts";
-import { Genrres } from "./data";
-import Header from "./components/Header";
-import SearchBar from "./components/SeachBar";
-import SortSelect from "./components/SortSelect";
-import GenreFilter from "./components/GenreFilter";
-import podcastGrid from "./components/podcastGrid";
-import pagination from "./components/pagination";
+import React, { useState, useEffect } from "react";
 import styles from "./App.module.css";
+import Header from "./components/header.jsx";
+import SearchBar from "./components/searchBar";
+import SortSelect from "./components/sortSelect";
+import GenreFilter from "./components/GenreFilter";
+import PodcastGrid from "./components/PodcastGrid";
+import Pagination from "./components/Pagination";
+import { PodcastProvider } from "./context/PodcastContext";
+import { fetchPodcast } from "./api/fetchPodcast.js";
 
-/**
- * Root component of the podcast explorer app.
- * handles data fetching and layout composition.
- */
+// Hardcoded genres with proper Numeric IDs matching the public Netlify podcast API schema
+const genres = [
+  { id: 1, title: "Personal Growth" },
+  { id: 2, title: "Investigative Journalism" },
+  { id: 3, title: "History" },
+  { id: 4, title: "Comedy" },
+  { id: 5, title: "Entertainment" },
+  { id: 6, title: "Business" },
+  { id: 7, title: "Fiction" },
+  { id: 8, title: "News" },
+  { id: 9, title: "Kids and Family" }
+];
 
 export default function App() {
-    const [podcasts, setPodcasts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [podcasts, setPodcasts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const {searchQuery, setSearchQuery} =useState("")
 
-    useEffect(() => {
-        fetchPodcasts(setPodcasts, setError, setLoading);
-    }, []);
 
-    return (
-        <>
-        <Header />
-        <podcastProvider initialPodcasts={podcasts}>
-            <main className={styles.main}>
-                <section className={styles.controls}>
-                    <seachBar />
-                    <SortSelect />
-                    <GenreFilter genres={Genrres} />
-                </section>
+  useEffect(() => {
+    fetchPodcast(setPodcasts, setError, setLoading);
 
-                {loading && (
-                    <div className={styles.messageContainer}>
-                        <div className={styles.spinner}></div>
-                        <p>Loading podcasts...</p>
-                
-                        </div>
-                        
-                
-                )}
-                
-                {error && (
-                    <div className={styles.message}>
-                        <div className={styles.error}>
-                        Error occurred while loading podcasts: {error}
-                        </div>
-                    </div>
-                )}
+    const filteredPodcast=podcasts.filter((podcast) => {
+        if (!podcast || !podcast.title) return false;
+        return podcast.title.toLowCase().includes(searchQuery.toLowCase());
+    })
+  }, []);
 
-                {!loading && !error && (
-                    <>
-                    <podcastGrid genres={Genrres} />
-                    <pagination />
-                    </>
-                )}
-            
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentCards = podcasts.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(podcasts.length / itemsPerPage);
 
-            </main>
+  return (
+    <>
+      <header />
+      <PodcastProvider initialPodcasts={podcasts}>
+        <main className={styles.main}>
+          <section className={styles.controls}>
+            <SearchBar />
+            <SortSelect />
+            <GenreFilter genres={genres} />
+          </section>
 
-        </podcastProvider>
-        </>
-    );
+          {loading && (
+            <div className={styles.messageContainer}>
+              <div className={styles.spinner}></div>
+              <p>Loading podcasts...</p>
+            </div>
+          )}
+
+          {!loading && error && (
+            <div className={styles.messageContainer}>
+              <p>Something went wrong: {error}</p>
+            </div>
+          )}
+
+          {!loading && !error && (
+            <>
+              <SearchBar onsearch={(text) => setSearchQuery(tex)} placeholder="Search podcasts..."/>
+              <PodcastGrid podcasts={currentCards} />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={(pageNumber) => setCurrentPage(pageNumber)}
+              />
+            </>
+          )}
+        </main>
+      </PodcastProvider>
+    </>
+  );
 }

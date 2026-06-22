@@ -1,25 +1,30 @@
-import { useContext } from "react";
-import { podcastContext } from "../context/podcastContext";
-import  styles from "./GeneFilter.module.css"
+import React, { useContext } from 'react';
+import { PodcastContext } from '../context/PodcastContext'; // Adjust path if needed
+import styles from './GenreFilter.module.css'; // Adjust path if needed
 
-/**
- * @param {{genres: {id:number,name:string}[]}} pros - list of genre from data
- */
-export default function Genrefilter({genre}) {
-    const { genre,setGenre} =usecontext(PodcastContext);
+export default function GenreFilter({ genres }) {
+  const context = useContext(PodcastContext);
 
-    return (
-        <select className={styles.select}
-        value={genre}
-        onChange={(e) => setGenre(e.target.value)}
-        >
-            <option value="all">all Genres </option>
-            {genres.map((g) => (
-                <Option key={g.id} value={g.id}>
-                    {g.title}
-                </Option>
-            ))}
+  // Safety fallback: prevents crash if provider is missing
+  if (!context) {
+    console.error("GenreFilter must be used within a PodcastContextProvider");
+    return null; 
+  }
 
-        </select>
-    )
+  const { genre, setGenre } = context;
+
+  return (
+    <select 
+      className={styles.select} 
+      value={genre || 'all'} 
+      onChange={(e) => setGenre(e.target.value)}
+    >
+      <option value="all">All Genres</option>
+      {genres && genres.map((g) => (
+        <option key={g.id} value={g.id}>
+          {g.title}
+        </option>
+      ))}
+    </select>
+  );
 }

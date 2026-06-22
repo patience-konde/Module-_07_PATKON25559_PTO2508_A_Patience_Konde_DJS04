@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./Searchbar.module.css"; 
+import styles from "./searchBar.module.css"; 
 
 export default function SearchBar({ onSearch, placeholder = "Search episodes, shows, or hosts..." }) {
   // /* { "comment": "Initializes and handles local UI state for the search query string" } */
@@ -17,6 +17,7 @@ export default function SearchBar({ onSearch, placeholder = "Search episodes, sh
     setQuery("");
     onSearch(""); 
   };
+  
 
   return (
     <div className={styles.container}>
