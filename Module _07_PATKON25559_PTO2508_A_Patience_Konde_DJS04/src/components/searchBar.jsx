@@ -17,7 +17,7 @@ export default function SearchBar({ onSearch, placeholder = "Search episodes, sh
     setQuery("");
     onSearch(""); 
   };
-  
+
 
   return (
     <div className={styles.container}>

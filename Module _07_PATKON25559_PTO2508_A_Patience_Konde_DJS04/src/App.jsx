@@ -29,6 +29,8 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const {searchQuery, setSearchQuery} =useState("")
+  const {currentSort,setCurrentSort} =useState("")
+  const {sortOrder, setSortOrder} = useState('asc')
 
 
   useEffect(() => {
@@ -71,7 +73,7 @@ export default function App() {
 
           {!loading && !error && (
             <>
-              <SearchBar onsearch={(text) => setSearchQuery(tex)} placeholder="Search podcasts..."/>
+           
               <PodcastGrid podcasts={currentCards} />
               <Pagination
                 currentPage={currentPage}
