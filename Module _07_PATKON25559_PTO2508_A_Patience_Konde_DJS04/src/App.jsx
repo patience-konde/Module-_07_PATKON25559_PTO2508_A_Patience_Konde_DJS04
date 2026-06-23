@@ -28,9 +28,9 @@ export default function App() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const {searchQuery, setSearchQuery} =useState("")
-  const {currentSort,setCurrentSort} =useState("")
-  const {sortOrder, setSortOrder} = useState('asc')
+  const [searchQuery, setSearchQuery] = useState("")
+  const [currentSort,setCurrentSort] = useState("")
+  const [sortOrder, setSortOrder] = useState('asc')
 
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function App() {
 
     const filteredPodcast=podcasts.filter((podcast) => {
         if (!podcast || !podcast.title) return false;
-        return podcast.title.toLowCase().includes(searchQuery.toLowCase());
+        return podcast.title.toLowerCase().includes(searchQuery.toLowerCase());
     })
   }, []);
 
